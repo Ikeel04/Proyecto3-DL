@@ -1,0 +1,8 @@
+torch>=2.4
+transformers==5.20.2
+peft==0.21.2
+accelerate==1.15.0
+pymysql==1.2.3
+sqlglot==30.24.0
+pandas
+matplotlib
