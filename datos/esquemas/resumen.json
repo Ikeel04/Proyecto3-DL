@@ -1,0 +1,72 @@
+{
+  "tienda_online": {
+    "split": "train",
+    "tablas": 6,
+    "filas": 1408
+  },
+  "universidad": {
+    "split": "train",
+    "tablas": 6,
+    "filas": 839
+  },
+  "hr_company": {
+    "split": "train",
+    "tablas": 5,
+    "filas": 592
+  },
+  "aerolinea": {
+    "split": "train",
+    "tablas": 5,
+    "filas": 1175
+  },
+  "restaurant_chain": {
+    "split": "train",
+    "tablas": 5,
+    "filas": 1473
+  },
+  "inv_almacen": {
+    "split": "train",
+    "tablas": 5,
+    "filas": 1016
+  },
+  "banco": {
+    "split": "train",
+    "tablas": 5,
+    "filas": 1560
+  },
+  "streaming": {
+    "split": "train",
+    "tablas": 5,
+    "filas": 1958
+  },
+  "liga_futbol": {
+    "split": "train",
+    "tablas": 5,
+    "filas": 736
+  },
+  "hotel_mgmt": {
+    "split": "train",
+    "tablas": 5,
+    "filas": 1386
+  },
+  "hospital": {
+    "split": "train",
+    "tablas": 5,
+    "filas": 1663
+  },
+  "logistics": {
+    "split": "train",
+    "tablas": 5,
+    "filas": 1096
+  },
+  "biblioteca": {
+    "split": "val",
+    "tablas": 6,
+    "filas": 1111
+  },
+  "gym_mgmt": {
+    "split": "val",
+    "tablas": 7,
+    "filas": 1927
+  }
+}
