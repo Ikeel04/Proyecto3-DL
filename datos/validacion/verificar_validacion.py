@@ -24,6 +24,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--host", default="127.0.0.1")
     ap.add_argument("--port", type=int, default=3306)
+    ap.add_argument("--socket", default=None)
     ap.add_argument("--user", default="root")
     ap.add_argument("--password", default="")
     args = ap.parse_args()
@@ -32,7 +33,8 @@ def main():
         preguntas = json.load(f)
 
     conn = pymysql.connect(host=args.host, user=args.user, password=args.password,
-                           port=args.port)
+                           port=args.port,
+                           **({"unix_socket": args.socket} if args.socket else {}))
     cur = conn.cursor()
 
     ok, problemas = 0, []

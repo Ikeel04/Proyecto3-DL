@@ -48,13 +48,15 @@ python src/correr_evaluacion.py --nombre final --adapter adapter/ --beams 4 --ve
 | `solucion.py` | contrato `generar_sql`, prompt, compactación del esquema, filtro de seguridad, ejecutar + reparar |
 | `config.json` | modelo base, adapter, semilla |
 | `adapter/` | adapter LoRA entregado |
-| `datos/esquemas_spec.py` | definición de los 14 esquemas propios (12 train, 2 val) |
-| `datos/construir_esquemas.py` | datos sintéticos, carga en MySQL y `SHOW CREATE TABLE` |
+| `datos/esquemas_spec.py` | definición de los 14 esquemas propios (12 train, 2 val) || `datos/construir_esquemas.py` | datos sintéticos, carga en MySQL y `SHOW CREATE TABLE` |
 | `datos/generar_pares.py` | plantillas de preguntas en español por nivel (58 patrones) |
 | `datos/validar_pares.py` | ejecuta cada par en MySQL; escribe `entrenamiento/train.jsonl` y `descartes/` |
 | `datos/generar_reparaciones.py` | ejemplos de corrección con errores reales de MySQL |
 | `datos/validacion/validacion_propia.json` | 40 preguntas propias sobre 2 esquemas no vistos |
+| `datos/validacion/validacion_propia.json` | 40 preguntas propias sobre 2 esquemas no vistos |
+| `datos/validacion/verificar_validacion.py` | corre las 40 referencias en MySQL y reporta si todas pasan |
 | `src/entrenar.py` | entrenamiento LoRA (configs A y B) |
+| `src/datos_chat.py` | convierte los pares al formato de chat (mismo prompt) |
 | `src/evaluador.py` | exactitud por ejecución, `ejecutar()` de solo lectura, categorías de error |
 | `src/correr_evaluacion.py` | evalúa una variante y guarda CSV/JSON en `resultados/` |
 | `src/prediccion.py` | predicción justificada del EX oculto |

@@ -218,3 +218,10 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Adapters intermedios de entrenamiento (el adapter final SÍ se entrega en adapter/)
+adapters/
+
+# Entorno local
+.venv/
+.DS_Store
