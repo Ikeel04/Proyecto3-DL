@@ -21,12 +21,22 @@ Ejemplos de reparación: 360 consultas rotas a propósito (columna, tabla, GROUP
 error real de MySQL. Servirán para el paso de corrección cuando el evaluador entregue `ejecutar`.
 `solucion.py` listo: prompt, compactación del esquema (~40% menos texto) y filtro de seguridad.
 
-### AAAA-MM-DD · José Ordóñez
-Revisión y ajuste de las 40 preguntas de validación propia. Se verificó que las 40 consultas de
-referencia corren en MySQL y devuelven filas. _(completar: qué preguntas cambiaste y por qué)_
+### 2026-10-25 · José Ordóñez
+40 preguntas de validación propia sobre `biblioteca` y `gym_mgmt`
+(13 fáciles, 14 medias, 13 difíciles), guardadas en `datos/validacion/validacion_propia.json`.
+Verificación de las 40 consultas de referencia corren en MySQL 8.4 con `ONLY_FULL_GROUP_BY`
+y devuelven filas. Hallazgo: los dumps tienen los valores con tilde almacenados doble-codificados
+('daÃ±ado' en vez de 'dañado'), Se remplazaron literales con tilde ('poesía' → 'novela',
+'dañado' → 'bueno') para que las referencias no dependan del encoding. El detalle lo verifica
+`datos/validacion/verificar_validacion.py`.
+
+### 2026-10-25 · José Ordóñez
+Escritas las hipótesis antes de entrenar en `resultados/hipotesis.md`: las configs LoRA A y B
+difieren en un solo factor (r=8 vs r=16, mismo alpha=16, lr=2e-4 y 2 épocas). Apuesto B algo
+mejor en nivel difícil; se elegirá por EX en la validación propia. Pendiente: entrenar en Colab.
 
 ### AAAA-MM-DD · José Ordóñez
-Hipótesis escritas antes de entrenar (`resultados/hipotesis.md`). Entrenamiento de la config A en
+Entrenamiento de la config A en
 Colab T4. _(completar: minutos, parámetros entrenables, train/eval loss final, si la curva se ve estable)_
 
 ### AAAA-MM-DD · José Ordóñez
