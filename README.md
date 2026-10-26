@@ -1,5 +1,7 @@
 # Proyecto 3 · Text-to-SQL con LoRA
 
+Link del repositorio [https://github.com/Ikeel04/Proyecto3-DL.git]
+
 Deep Learning 2026 · Universidad del Valle de Guatemala
 Adrián González (23152) · José Ordóñez
 
