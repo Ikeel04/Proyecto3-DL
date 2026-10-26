@@ -1,0 +1,225 @@
+commit 7d4781db7071863f0bc5c008965d5cc8fd4db258
+Author: JoseOrdonezB <ord231329@uvg.edu.gt>
+Date:   2026-10-26 04:28:45 +0000
+
+    Adapter final en adapter/, validacion_propia.csv, prediccion.json y presentacion.pdf
+
+ adapter/LEEME.md                  |      4 -
+ adapter/README.md                 |    207 +
+ adapter/adapter_config.json       |     48 +
+ adapter/adapter_model.safetensors |    Bin 0 -> 17462432 bytes
+ adapter/chat_template.jinja       |     54 +
+ adapter/tokenizer.json            | 757444 +++++++++++++++++++++++++++++++++++
+ adapter/tokenizer_config.json     |     30 +
+ presentacion.pdf                  |    Bin 0 -> 164866 bytes
+ resultados/prediccion.json        |     24 +
+ 9 files changed, 757807 insertions(+), 4 deletions(-)
+
+commit ebe5f247192cfbdb0c6e917b32b939c702f49512
+Author: JoseOrdonezB <ord231329@uvg.edu.gt>
+Date:   2026-10-26 04:27:00 +0000
+
+    Evaluaciones de validación propia (baseline, configs A/B y experimentos de inferencia)
+
+ resultados/eval_A_greedy.csv     |  41 ++++
+ resultados/eval_A_greedy.json    | 508 +++++++++++++++++++++++++++++++++++++++
+ resultados/eval_B_greedy.csv     |  41 ++++
+ resultados/eval_B_greedy.json    | 508 +++++++++++++++++++++++++++++++++++++++
+ resultados/eval_base_final.csv   |  41 ++++
+ resultados/eval_base_final.json  | 508 +++++++++++++++++++++++++++++++++++++++
+ resultados/eval_base_greedy.csv  |  41 ++++
+ resultados/eval_base_greedy.json | 508 +++++++++++++++++++++++++++++++++++++++
+ resultados/eval_final.csv        |  41 ++++
+ resultados/eval_final.json       | 508 +++++++++++++++++++++++++++++++++++++++
+ resultados/eval_mejor_beam.csv   |  41 ++++
+ resultados/eval_mejor_beam.json  | 508 +++++++++++++++++++++++++++++++++++++++
+ resultados/eval_mejor_crudo.csv  |  41 ++++
+ resultados/eval_mejor_crudo.json | 508 +++++++++++++++++++++++++++++++++++++++
+ resultados/validacion_propia.csv |  41 ++++
+ src/evaluador.py                 |   3 +
+ 16 files changed, 3887 insertions(+)
+
+commit d1a52b74c80585d14edbd64cea6b38998e6de433
+Author: JoseOrdonezB <ord231329@uvg.edu.gt>
+Date:   2026-10-26 04:06:00 +0000
+
+    Entrenamiento LoRA de las configs A (atención) y B (atención+MLP)
+
+ adapters/config_A/README.md                 |    207 +
+ adapters/config_A/adapter_config.json       |     48 +
+ adapters/config_A/adapter_model.safetensors |    Bin 0 -> 17462432 bytes
+ adapters/config_A/chat_template.jinja       |     54 +
+ adapters/config_A/tokenizer.json            | 757444 +++++++++++++++++++++++++
+ adapters/config_A/tokenizer_config.json     |     30 +
+ adapters/config_B/README.md                 |    207 +
+ adapters/config_B/adapter_config.json       |     51 +
+ adapters/config_B/adapter_model.safetensors |    Bin 0 -> 73911112 bytes
+ adapters/config_B/chat_template.jinja       |     54 +
+ adapters/config_B/tokenizer.json            | 757444 +++++++++++++++++++++++++
+ adapters/config_B/tokenizer_config.json     |     30 +
+ resultados/entrenamiento_A.json             |    929 +
+ resultados/entrenamiento_B.json             |    932 +
+ resultados/loss_A.png                       |    Bin 0 -> 43756 bytes
+ resultados/loss_B.png                       |    Bin 0 -> 47724 bytes
+ src/entrenar.py                             |      5 +-
+ 17 files changed, 1517434 insertions(+), 1 deletion(-)
+
+commit 0f8f32afb763d68bd4878f99367c3927787211cc
+Author: JoseOrdonezB <ord231329@uvg.edu.gt>
+Date:   2026-10-25 20:14:58 -0600
+
+    correcciones en el notebook
+
+ notebooks/00_proyecto_completo.ipynb | 44 ++++++++++++++++++++++++++----------
+ notebooks/02_entrenamiento.ipynb     |  1 +
+ src/entrenar.py                      |  9 ++++++--
+ 3 files changed, 40 insertions(+), 14 deletions(-)
+
+commit 7dcb44df5f630b6d7d5280135e437ec64cd5ff9f
+Author: JoseOrdonezB <ord231329@uvg.edu.gt>
+Date:   2026-10-25 19:43:16 -0600
+
+    unificación del notebook
+
+ .gitignore                           |   6 +-
+ README.md                            |  18 +-
+ notebooks/00_proyecto_completo.ipynb | 429 +++++++++++++++++++++++++++++++++++
+ src/evaluador.py                     |  17 +-
+ 4 files changed, 454 insertions(+), 16 deletions(-)
+
+commit db53b52bfb046070ab96f710c060a0edd6f59f78
+Author: JoseOrdonezB <ord231329@uvg.edu.gt>
+Date:   2026-10-25 19:27:28 -0600
+
+    dataset de chat y notebook 02
+
+ .gitignore                               |    7 +
+ README.md                                |    6 +-
+ datos/entrenamiento/dataset_chat.jsonl   | 3000 ++++++++++++++++++++++++++++++
+ datos/entrenamiento/dataset_eval.jsonl   |  200 ++
+ datos/validacion/verificar_validacion.py |    4 +-
+ notebooks/02_entrenamiento.ipynb         |  215 +++
+ notebooks/03_evaluacion.ipynb            |  268 +++
+ resultados/hipotesis.md                  |   55 +-
+ src/correr_evaluacion.py                 |   49 +
+ src/datos_chat.py                        |   90 +
+ src/entrenar.py                          |  222 +++
+ src/evaluador.py                         |  310 +++
+ src/prediccion.py                        |   95 +
+ 13 files changed, 4491 insertions(+), 30 deletions(-)
+
+commit b11c9a9cf819e2337d96b6b05556b3c47b62cb5a
+Author: JoseOrdonezB <ord231329@uvg.edu.gt>
+Date:   2026-10-25 19:15:27 -0600
+
+    validación 40 preguntas
+
+ BITACORA.md                              | 18 ++++++--
+ datos/validacion/validacion_propia.json  | 42 ++++++++++++++++++
+ datos/validacion/verificar_validacion.py | 74 ++++++++++++++++++++++++++++++++
+ resultados/hipotesis.md                  | 44 +++++++++++++++++++
+ 4 files changed, 174 insertions(+), 4 deletions(-)
+
+commit f19d404ada408c64c7a8b5a1e0c262e5308fd05d
+Author: Ikeel04 <adrianricardo.gm@gmail.com>
+Date:   2026-10-24 18:16:10 -0600
+
+    solucion.py, MySQL en Colab y notebook de datos
+
+ notebooks/01_datos.ipynb        | 190 +++++++++++++++++++++++++++
+ scripts/instalar_mysql_colab.sh |  31 +++++
+ solucion.py                     | 285 ++++++++++++++++++++++++++++++++++++++++
+ src/generar_presentacion.py     | 269 +++++++++++++++++++++++++++++++++++++
+ 4 files changed, 775 insertions(+)
+
+commit ff4b15e867a00627448f7a9b2b5170b71da3726b
+Author: Ikeel04 <adrianricardo.gm@gmail.com>
+Date:   2026-10-24 18:12:16 -0600
+
+    Ejemplos de reparacion
+
+ datos/entrenamiento/reparaciones.jsonl | 360 +++++++++++++++++++++++++++++++++
+ datos/generar_reparaciones.py          | 109 ++++++++++
+ 2 files changed, 469 insertions(+)
+
+commit c2ff4cc2fcba6bbbe7091357fd5e79245135d72a
+Author: Ikeel04 <adrianricardo.gm@gmail.com>
+Date:   2026-10-24 18:09:35 -0600
+
+    Pares validados en MySQL y descartes
+
+ datos/entrenamiento/train.jsonl | 2840 +++++++++++++++++++++++++++++++++++++++
+ datos/generar_pares.py          |  502 +++++++
+ datos/validar_pares.py          |  116 ++
+ 3 files changed, 3458 insertions(+)
+
+commit 3be3df054c74e16ae517f561bb348d66052eba7b
+Author: Ikeel04 <adrianricardo.gm@gmail.com>
+Date:   2026-10-24 18:05:01 -0600
+
+    Esquemas propios y datos sinteticos
+
+ datos/construir_esquemas.py                      |  244 +++
+ datos/esquemas/resumen.json                      |   72 +
+ datos/esquemas/train/aerolinea.schema.sql        |   53 +
+ datos/esquemas/train/aerolinea.sql               | 1247 +++++++++++++
+ datos/esquemas/train/banco.schema.sql            |   52 +
+ datos/esquemas/train/banco.sql                   | 1636 +++++++++++++++++
+ datos/esquemas/train/hospital.schema.sql         |   50 +
+ datos/esquemas/train/hospital.sql                | 1737 ++++++++++++++++++
+ datos/esquemas/train/hotel_mgmt.schema.sql       |   51 +
+ datos/esquemas/train/hotel_mgmt.sql              | 1457 ++++++++++++++++
+ datos/esquemas/train/hr_company.schema.sql       |   54 +
+ datos/esquemas/train/hr_company.sql              |  659 +++++++
+ datos/esquemas/train/inv_almacen.schema.sql      |   50 +
+ datos/esquemas/train/inv_almacen.sql             | 1086 ++++++++++++
+ datos/esquemas/train/liga_futbol.schema.sql      |   57 +
+ datos/esquemas/train/liga_futbol.sql             |  805 +++++++++
+ datos/esquemas/train/logistics.schema.sql        |   51 +
+ datos/esquemas/train/logistics.sql               | 1167 +++++++++++++
+ datos/esquemas/train/restaurant_chain.schema.sql |   49 +
+ datos/esquemas/train/restaurant_chain.sql        | 1544 ++++++++++++++++
+ datos/esquemas/train/streaming.schema.sql        |   52 +
+ datos/esquemas/train/streaming.sql               | 2035 ++++++++++++++++++++++
+ datos/esquemas/train/tienda_online.schema.sql    |   61 +
+ datos/esquemas/train/tienda_online.sql           | 1492 ++++++++++++++++
+ datos/esquemas/train/universidad.schema.sql      |   62 +
+ datos/esquemas/train/universidad.sql             |  917 ++++++++++
+ datos/esquemas/val/biblioteca.schema.sql         |   60 +
+ datos/esquemas/val/biblioteca.sql                | 1192 +++++++++++++
+ datos/esquemas/val/gym_mgmt.schema.sql           |   70 +
+ datos/esquemas/val/gym_mgmt.sql                  | 2024 +++++++++++++++++++++
+ datos/esquemas_spec.py                           |  588 +++++++
+ 31 files changed, 20674 insertions(+)
+
+commit cc26f1f792f64efdd10b52aa2c4cd86871c962cb
+Author: Ikeel04 <adrianricardo.gm@gmail.com>
+Date:   2026-10-24 18:01:43 -0600
+
+    Estructura base
+
+ adapter/LEEME.md    | 4 ++++
+ resultados/.gitkeep | 0
+ 2 files changed, 4 insertions(+)
+
+commit e683aa4df690fdcce80bc24be1d0825d980c736e
+Author: Ikeel04 <131807195+Ikeel04@users.noreply.github.com>
+Date:   2026-10-24 17:57:35 -0600
+
+    Requerimientos y planificación
+
+ BITACORA.md       |  49 +++++++++++++++++++++++++
+ CONTRIBUCIONES.md |  25 +++++++++++++
+ README.md         | 107 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ config.json       |   6 +++
+ requirements.txt  |   8 ++++
+ 5 files changed, 195 insertions(+)
+
+commit b758403a165c030e67520a9fd4bbb05cc4f32cea
+Author: Ikeel04 <131807195+Ikeel04@users.noreply.github.com>
+Date:   2026-10-24 17:50:56 -0600
+
+    Initial commit
+
+ .gitignore | 220 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 220 insertions(+)
