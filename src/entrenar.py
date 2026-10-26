@@ -20,6 +20,8 @@ import os
 import random
 import time
 
+os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
+
 import numpy as np
 import torch
 import torch.nn.functional as F
@@ -157,7 +159,8 @@ def entrenar_config(nombre, args):
                 if paso % 10 == 0:
                     print(f"  paso {paso}/{pasos}  loss={out.loss.item():.4f}  lr={sched.get_last_lr()[0]:.2e}")
                 if paso % args.cada_eval == 0:
-                    eval_loss_final = probar_eval(modelo, evalset, collate, device, micro_pad)
+                    eval_loss_final = probar_eval(modelo, evalset[:50], collate, device, micro_pad,
+                                                  lote=1)
                     eval_log.append({"step": paso, "eval_loss": eval_loss_final})
                     print(f"  [eval] paso {paso}  eval_loss={eval_loss_final:.4f}")
                     modelo.train()
@@ -192,8 +195,9 @@ def entrenar_config(nombre, args):
 
 
 @torch.no_grad()
-def probar_eval(modelo, evalset, collate, device, pad_id, lote=8):
+def probar_eval(modelo, evalset, collate, device, pad_id, lote=1):
     modelo.eval()
+    torch.cuda.empty_cache()
     total, n_tok = 0.0, 0
     for i in range(0, len(evalset), lote):
         batch = collate(evalset[i: i + lote], pad_id)
@@ -202,6 +206,7 @@ def probar_eval(modelo, evalset, collate, device, pad_id, lote=8):
                      labels=batch["labels"])
         n_tok += (batch["labels"] != -100).sum().item()
         total += out.loss.item() * (batch["labels"] != -100).sum().item()
+    torch.cuda.empty_cache()
     return total / max(n_tok, 1)
 
 
