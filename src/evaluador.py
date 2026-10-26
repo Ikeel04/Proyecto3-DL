@@ -182,7 +182,9 @@ def evaluar(nombre, mysql, adapter=None, sin_adapter=False, beams=None, ejecutar
     if max_preguntas:
         preguntas = preguntas[:max_preguntas]
 
-    # variables inferidas por solucion.py en su import
+    # variables clave de solucion.py; el import es perezoso: el modelo se carga
+    # en el cargar() correspondiente (así funciona sin adapter/ aún copiado)
+    os.environ["T2SQL_SOLO_PROMPT"] = "1"
     os.environ["T2SQL_NUM_BEAMS"] = str(beams or 1)
     os.environ["T2SQL_USAR_EJECUTAR"] = "1" if ejecutar else "0"
     os.environ["T2SQL_FORMATO"] = formato
@@ -190,17 +192,16 @@ def evaluar(nombre, mysql, adapter=None, sin_adapter=False, beams=None, ejecutar
         sys.modules.pop("solucion", None)
     if "solucion" in sys.modules:
         sys.modules.pop("solucion", None)
+    import solucion  # con T2SQL_SOLO_PROMPT=1 no carga el modelo en el import...
     if solucion_mod is not None:  # gancho para pruebas (stub sin modelo)
         solucion = solucion_mod
         globals()["solucion"] = solucion
+    elif adapter:
+        cfg = solucion.cargar(adapter=adapter)
+    elif sin_adapter:
+        cfg = solucion.cargar(usar_adapter=False)
     else:
-        import solucion  # carga de nuevo con las variables ya fijadas
-        if adapter:
-            cfg = solucion.cargar(adapter=adapter)
-        elif sin_adapter:
-            cfg = solucion.cargar(usar_adapter=False)
-        else:
-            cfg = solucion.cargar()
+        cfg = solucion.cargar()
 
     filas_salida = []
     errores_cat = Counter()

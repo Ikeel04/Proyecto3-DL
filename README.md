@@ -21,12 +21,18 @@ Con `"usar_adapter": false` en `config.json` se usa el modelo base con el mismo 
 
 ### Reproducir todo en Colab (GPU T4)
 
-1. `notebooks/01_datos.ipynb`: instala MySQL 8.4.10, construye los esquemas y valida los pares.
-2. `notebooks/02_entrenamiento.ipynb`: entrena las configuraciones A y B (aprox. 35–50 min cada una en T4).
-3. `notebooks/03_evaluacion.ipynb`: baseline, experimento de inferencia, análisis de errores,
-   elige el adapter, genera `resultados/validacion_propia.csv`, la predicción y `presentacion.pdf`.
+`notebooks/00_proyecto_completo.ipynb` que ejecuta el flujo completo en una
+sola sesión (datos → entrenamiento A y B → evaluación → entregables), con checkpoints de
+commit/push para poder reanudar si la sesión se cae:
 
-Para clonar el repo privado desde Colab, guarden un token de GitHub en los *Secrets* de Colab con
+1. Haz tu commit+push local; en Colab: pestaña **"GitHub"** → abre `notebooks/00_proyecto_completo.ipynb`.
+2. En el panel izquierdo, ícono de llave (**Secretos**): crea `GITHUB_TOKEN` con un token
+   fine-grained de GitHub (permiso *Contents: Read and write* sobre el repositorio), activado con
+   "acceso para notebook".
+3. Llena `REPO`, `GIT_USER` y `GIT_EMAIL` en la primera celda, selecciona **T4 GPU**
+   (Entorno de ejecución → Cambiar tipo) y ejecuta las celdas de arriba hacia abajo (~3–4 h).
+
+Para clonar el repo privado desde Colab, guardan un token de GitHub en los *Secrets* de Colab con
 el nombre `GITHUB_TOKEN` y cambien la variable `REPO` de la primera celda.
 
 ### En local (sin Colab)

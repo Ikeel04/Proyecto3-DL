@@ -219,8 +219,10 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-# Adapters intermedios de entrenamiento (el adapter final SÍ se entrega en adapter/)
-adapters/
+# Adapters intermedios de entrenamiento (solo se suben los de las configs A y B; el final se entrega en adapter/)
+adapters/*
+!adapters/config_A/
+!adapters/config_B/
 
 # Entorno local
 .venv/
