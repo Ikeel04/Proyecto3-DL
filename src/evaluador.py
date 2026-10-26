@@ -192,6 +192,9 @@ def evaluar(nombre, mysql, adapter=None, sin_adapter=False, beams=None, ejecutar
         sys.modules.pop("solucion", None)
     if "solucion" in sys.modules:
         sys.modules.pop("solucion", None)
+    _raiz = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    if _raiz not in sys.path:
+        sys.path.insert(0, _raiz)
     import solucion  # con T2SQL_SOLO_PROMPT=1 no carga el modelo en el import...
     if solucion_mod is not None:  # gancho para pruebas (stub sin modelo)
         solucion = solucion_mod
