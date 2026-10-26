@@ -74,9 +74,12 @@ def collate(lote, pad_id):
     return {k: torch.tensor(v) for k, v in batch.items()}
 
 
-def guardar_curva(log_history, png, titulo):
+def guardar_curva(log_history, eval_log, png, titulo):
     tr_s, tr_l, ev_s, ev_l = [], [], [], []
     for h in log_history:
+        if "loss" in h:
+            tr_s.append(h["step"]); tr_l.append(h["loss"])
+    for h in eval_log:
         if "loss" in h:
             tr_s.append(h["step"]); tr_l.append(h["loss"])
         if "eval_loss" in h:
