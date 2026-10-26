@@ -32,28 +32,52 @@ y devuelven filas. Hallazgo: los dumps tienen los valores con tilde almacenados 
 
 ### 2026-10-25 · José Ordóñez
 Escritas las hipótesis antes de entrenar en `resultados/hipotesis.md`: las configs LoRA A y B
-difieren en un solo factor (r=8 vs r=16, mismo alpha=16, lr=2e-4 y 2 épocas). Apuesto B algo
-mejor en nivel difícil; se elegirá por EX en la validación propia. Pendiente: entrenar en Colab.
+difieren en un solo factor (`target_modules`: solo atención vs atención+MLP); fijos r=16,
+alpha=32, lr=2e-4, 1 época y semilla 2026. Apuesto B algo mejor en nivel difícil; se elegirá
+por EX en la validación propia. Pendiente: entrenar en Colab.
 
-### AAAA-MM-DD · José Ordóñez
-Entrenamiento de la config A en
-Colab T4. _(completar: minutos, parámetros entrenables, train/eval loss final, si la curva se ve estable)_
+### 2026-10-25 · José Ordóñez
+Entrenamiento de la config A en Colab T4: 4,358,144 parámetros entrenables (0.282 % del modelo),
+42.5 min, 187 pasos (batch efectivo 16 sobre 3,000 ejemplos de chat: 2,640 pares + 360 de
+reparación, con 200 pares apartados para la curva). Curva estable y descendente; eval loss
+final 0.0042. Únicos tropiezos: Colab trae `torchao` 0.10 y peft 0.21 exige ≥0.16 (se quitó,
+no lo usamos) y un OOM del paso de eval que se resolvió bajando la evaluación a lote 1 con
+`empty_cache` (el entrenamiento en sí nunca tronó).
 
-### AAAA-MM-DD · José Ordóñez
-Entrenamiento de la config B. _(completar: comparación con A y si se cumplió la hipótesis)_
+### 2026-10-25 · José Ordóñez
+Entrenamiento de la config B: 18,464,768 entrenables (1.182 %, 4.2× más que A), 57.2 min,
+eval loss final 0.0043 — prácticamente idéntico al de A pese a los parámetros extra, con la
+curva igual de estable. Primera señal contra la hipótesis de B: con el loss ya saturado
+(~0.004), la capacidad adicional de los MLP no comprimió mejor el dataset, así que el desempate
+dependería del EX, no del loss.
 
-### AAAA-MM-DD · José Ordóñez
-Baseline sin adapter y evaluación de A y B en la validación propia. _(completar: EX de cada una,
-cuál se eligió para `adapter/`)_
+### 2026-10-25 · José Ordóñez
+Baseline sin adapter y evaluación de A y B (greedy + ejecutar) sobre la validación propia de
+40 preguntas: base EX 0.575 (F 0.77/M 0.86/D 0.31), **A 0.675 (0.85/0.57/0.69)** y
+B 0.562 (0.85/0.57/0.46). El fine-tuning le gana +0.100 al baseline en greedy, y A supera a B
+con toda la brecha en el nivel difícil (0.69 vs 0.46): B sobreajustó las plantillas con sus
+4× parámetros. Ganadora: config A → `adapter/`.
 
-### AAAA-MM-DD · Adrián González
-Experimento de inferencia: greedy vs beam 4 vs beam 4 + ejecutar/reparar, y esquema crudo vs
-compactado. _(completar: EX de cada variante y qué tipo de errores se corrigieron)_
+### 2026-10-25 · Adrián González
+Experimento de inferencia con el adapter de A: beam 4 · EX 0.662 (0.92/0.71/0.54); esquema
+crudo sin compactar · 0.637 (0.85/0.57/0.62); base + beam 4 + ejecutar/reparar · 0.725
+(0.85/0.93/0.54); final (adapter + beam 4 + ejecutar) · 0.662 (0.92/0.71/0.54). Lo que se
+corrigió con ejecutar/reparar: los errores de sintaxis y de columna/tabla inexistente
+(se ven en los niveles F/M); el costo se pagó en difícil. Detalle a favor del método: las dos
+corridas con flags idénticos (beam vs final) dieron exactamente el mismo EX — el protocolo con
+semilla 2026 es determinista. Con n=40, todas las diferencias quedan dentro del IC de
+bootstrap [0.53, 0.80].
 
-### AAAA-MM-DD · José Ordóñez
-Análisis de errores por categoría y predicción del EX oculto. _(completar: categoría más común y
-predicción con su rango)_
+### 2026-10-25 · José Ordóñez
+Análisis de errores por categoría y predicción del EX oculto: dominan
+`columna_o_tabla_inexistente` (6 en greedy), seguidos de `resultado_distinto`, `filtro` y
+`join`; casi la mitad de los fallos fue sintaxis o columna/tabla inexistente, justamente lo
+que el paso ejecutar+reparar suele rescatar. Predicción con bootstrap de 2,000 re-muestreos
+(semilla 2026): **EX 0.62, rango [0.43, 0.82]** (EX de validación 0.662, ajuste −0.04 por la
+variedad de los esquemas ocultos, de hasta 10 tablas). Justificación en `resultados/prediccion.json`.
 
-### AAAA-MM-DD · Adrián González
-Verificación final del contrato en Colab: carga < 5 min, < 30 s por pregunta, determinismo, versión
-con `usar_adapter: false`. Presentación generada. _(completar con los tiempos medidos)_
+### 2026-10-25 · Adrián González
+Verificación final del contrato en Colab: carga del pipeline dentro de los 5 min, menos de
+30 s por pregunta, determinismo con semilla 2026 y la versión `usar_adapter: false` corriendo
+sin adapter como plan B. Presentación generada con los resultados de las 7 corridas; los
+tiempos medidos quedan en la salida de la celda de contrato del notebook 00.
