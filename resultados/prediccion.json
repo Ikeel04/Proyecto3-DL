@@ -1,0 +1,24 @@
+{
+  "ex_val": 0.662,
+  "ic_bajo": 0.53,
+  "ic_alto": 0.8,
+  "ajuste": -0.041,
+  "prediccion": 0.621,
+  "rango": [
+    0.43,
+    0.82
+  ],
+  "razones": [
+    "EX ponderada en la validación propia (pipeline de entrega): 0.662.",
+    "Fácil acierta 0.92; los pesos 1/2/3 del docente premian de forma parecida.",
+    "El 45% de los fallos en la validación fue sintaxis o columna/tabla inexistente, que es justo lo que el paso de ejecutar + reparar suele poder corregir.",
+    "Bootstrap de 2000 re-muestreos sobre las 40 preguntas (semilla 2026): IC 90% = [0.53, 0.80].",
+    "Ajuste final por estilo: −0.05 (preguntas ocultas más variadas y hasta 10 tablas por esquema) más +0.02 por la proporción reparable de errores (45%) en la validación."
+  ],
+  "errores_por_categoria": {
+    "resultado_distinto": 2,
+    "columna_o_tabla_inexistente": 5,
+    "filtro": 2,
+    "join": 2
+  }
+}
